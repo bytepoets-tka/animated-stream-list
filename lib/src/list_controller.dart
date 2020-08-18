@@ -8,7 +8,7 @@ typedef Widget AnimatedStreamListItemBuilder<T>(
 );
 
 class ListController<E> {
-  final GlobalKey<AnimatedListState> key;
+  final GlobalKey<SliverAnimatedListState> key;
   final List<E> items;
   final Duration duration;
   final AnimatedStreamListItemBuilder<E> itemRemovedBuilder;
@@ -22,7 +22,7 @@ class ListController<E> {
         assert(itemRemovedBuilder != null),
         assert(items != null);
 
-  AnimatedListState get _list => key.currentState;
+  SliverAnimatedListState get _list => key.currentState;
 
   void insert(int index, E item) {
     items.insert(index, item);

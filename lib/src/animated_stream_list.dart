@@ -11,13 +11,6 @@ class AnimatedStreamList<E> extends StatefulWidget {
   final List<E> initialList;
   final AnimatedStreamListItemBuilder<E> itemBuilder;
   final AnimatedStreamListItemBuilder<E> itemRemovedBuilder;
-  final Axis scrollDirection;
-  final bool reverse;
-  final ScrollController scrollController;
-  final bool primary;
-  final ScrollPhysics scrollPhysics;
-  final bool shrinkWrap;
-  final EdgeInsetsGeometry padding;
   final Equalizer equals;
   final Duration duration;
 
@@ -26,13 +19,6 @@ class AnimatedStreamList<E> extends StatefulWidget {
       this.initialList,
       @required this.itemBuilder,
       @required this.itemRemovedBuilder,
-      this.scrollDirection: Axis.vertical,
-      this.reverse: false,
-      this.scrollController,
-      this.primary,
-      this.scrollPhysics,
-      this.shrinkWrap: false,
-      this.padding,
       this.equals,
       this.duration = const Duration(milliseconds: 300)});
 
@@ -42,7 +28,7 @@ class AnimatedStreamList<E> extends StatefulWidget {
 
 class _AnimatedStreamListState<E> extends State<AnimatedStreamList<E>>
     with WidgetsBindingObserver {
-  final GlobalKey<AnimatedListState> _globalKey = GlobalKey();
+  final GlobalKey<SliverAnimatedListState> _globalKey = GlobalKey();
   ListController<E> _listController;
   DiffApplier<E> _diffApplier;
   DiffUtil<E> _diffUtil;
@@ -100,16 +86,9 @@ class _AnimatedStreamListState<E> extends State<AnimatedStreamList<E>>
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedList(
+    return SliverAnimatedList(
       initialItemCount: _listController.items.length,
       key: _globalKey,
-      scrollDirection: widget.scrollDirection,
-      reverse: widget.reverse,
-      primary: widget.primary,
-      controller: widget.scrollController,
-      physics: widget.scrollPhysics,
-      padding: widget.padding,
-      shrinkWrap: widget.shrinkWrap,
       itemBuilder:
           (BuildContext context, int index, Animation<double> animation) =>
               widget.itemBuilder(
